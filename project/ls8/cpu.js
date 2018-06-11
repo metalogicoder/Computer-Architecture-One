@@ -70,9 +70,10 @@ class CPU {
         // right now.)
 
         // !!! IMPLEMENT ME
+        const IR = this.ram.read(this.PC);
 
         // Debugging output
-        //console.log(`${this.PC}: ${IR.toString(2)}`);
+        // console.log(`${this.PC}: ${IR.toString(2)}`);
 
         // Get the two bytes in memory _after_ the PC in case the instruction
         // needs them.
@@ -84,12 +85,14 @@ class CPU {
 
         // !!! IMPLEMENT ME
 
+
         // Increment the PC register to go to the next instruction. Instructions
         // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
         // instruction byte tells you how many bytes follow the instruction byte
         // for any particular instruction.
         
         // !!! IMPLEMENT ME
+        this.PC++;
     }
 }
 
