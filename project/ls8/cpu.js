@@ -130,6 +130,16 @@ class CPU {
         const instruction = IR.toString(2).binPad();
         
         switch(instruction) {
+          case(ADD):
+            console.log('HLT');
+            break;
+          case(HLT):
+            console.log('HLT');
+            this.stopClock();
+            break;
+          case(LDI): 
+            console.log('LDI');
+            break;
           default:
             console.log(IR.toString(2).binPad());
         }
