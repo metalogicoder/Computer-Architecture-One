@@ -131,16 +131,14 @@ class CPU {
     const argNum = parseInt(instruction.slice(0, 2), 2);
     
     switch(instruction) {
-      case(ADD):
-        console.log('ADD');
-        break;
       case(HLT):
-        console.log('HLT');
         this.stopClock();
         break;
       case(LDI): 
-        console.log('LDI');
         this.reg[operandA] = operandB;
+        break;
+      case(PRN):
+        console.log(this.reg[operandA]);
         break;
       default:
         console.log(instruction, argNum);
