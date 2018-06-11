@@ -79,6 +79,8 @@ class CPU {
         // needs them.
 
         // !!! IMPLEMENT ME
+        const operandA = this.ram.read(this.PC + 1);
+        const operandB = this.ram.read(this.PC + 2);
 
         // Execute the instruction. Perform the actions for the instruction as
         // outlined in the LS-8 spec.
