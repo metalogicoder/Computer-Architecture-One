@@ -2,6 +2,17 @@
  * LS-8 v2.0 emulator skeleton code
  */
 
+// Helper function to pad binary values
+String.prototype.binPad = function() {
+  var str = this;
+  while (str.length < 8)
+    str = 0 + str;
+  return `${str}`;
+}
+
+
+
+
 /**
  * Class for simulating a simple Computer (CPU & memory)
  */
