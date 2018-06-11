@@ -127,7 +127,12 @@ class CPU {
         // outlined in the LS-8 spec.
 
         // !!! IMPLEMENT ME
-
+        const instruction = IR.toString(2).binPad();
+        
+        switch(instruction) {
+          default:
+            console.log(IR.toString(2).binPad());
+        }
 
         // Increment the PC register to go to the next instruction. Instructions
         // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
