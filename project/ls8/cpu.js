@@ -97,6 +97,7 @@ class CPU {
     switch (op) {
       case 'MUL':
         // !!! IMPLEMENT ME
+        this.reg[regA] *= this.reg[regB];
         break;
     }
   }
@@ -127,24 +128,27 @@ class CPU {
     // outlined in the LS-8 spec.
 
     // !!! IMPLEMENT ME
-    const aluMask = '0b00100000';
-
-    const instruction = `0b${IR.toString(2).binPad()}`;
-    const argNum = parseInt(instruction, 2) >> 6;
-    const isALU = (instruction && aluMask) >> 5;
+    const instBin = `0b${IR.toString(2).binPad()}`;
+    const argNum = Number(instBin) >> 6;
+    // const isALU = (instBin && '0b00100000') >> 5;
+    // const category = (instBin && '0b00011000') >> 3;
+    // const instruction = (instBin && '0b00000111');
     
-    switch(instruction) {
-      case(HLT):
+    switch (instBin) {
+      case HLT:
         this.stopClock();
         break;
-      case(LDI): 
+      case LDI:
         this.reg[operandA] = operandB;
         break;
-      case(PRN):
+      case MUL:
+        this.alu('MUL', operandA, operandB);
+        break;
+      case PRN:
         console.log(this.reg[operandA]);
         break;
       default:
-        // console.log(instruction);
+        // console.log(instBin, argNum);
     }
 
     // Increment the PC register to go to the next instruction. Instructions
