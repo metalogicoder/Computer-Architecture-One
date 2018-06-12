@@ -2,14 +2,6 @@
  * LS-8 v2.0 emulator skeleton code
  */
 
-// Helper function to pad binary values
-String.prototype.binPad = function() {
-  var str = this;
-  while (str.length < 8)
-    str = 0 + str;
-  return `${str}`;
-}
-
 // Constant variables associated with intruction bytes
 ADD = '0b10101000',
 AND = '0b10110011',
@@ -128,8 +120,8 @@ class CPU {
     // outlined in the LS-8 spec.
 
     // !!! IMPLEMENT ME
-    const instBin = `0b${IR.toString(2).binPad()}`;
-    const argNum = Number(instBin) >> 6;
+    const instBin = `0b${IR.toString(2).padStart(8, 0)}`; // "0b10011001"
+    const argNum = Number(instBin) >> 6; // 2
     // const isALU = (instBin && '0b00100000') >> 5;
     // const category = (instBin && '0b00011000') >> 3;
     // const instruction = (instBin && '0b00000111');
