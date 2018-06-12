@@ -62,6 +62,9 @@ const filename = argv[0];
 const filedata = fs.readFileSync(filename, "utf8");
 const lines = filedata.trim().split(/[\r\n]+/g);
 
+lines.forEach((bin, idx) => {
+  if(idx) cpu.poke(idx, parseInt(bin.split(' ')[0], 2));
+});
 
 // loadMemory(cpu);
 
