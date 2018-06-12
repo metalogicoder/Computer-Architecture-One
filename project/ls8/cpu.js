@@ -11,36 +11,36 @@ String.prototype.binPad = function() {
 }
 
 // Constant variables associated with intruction bytes
-ADD = '10101000',
-AND = '10110011',
-CALL = '01001000',
-CMP = '10100000',
-DEC = '01111001',
-DIV = '10101011',
-HLT = '00000001',
-INC = '01111000',
-INT = '01001010',
-IRET = '00001011',
-JEQ = '01010001',
-JGT = '01010100',
-JLT = '01010011',
-JMP = '01010000',
-JNE = '01010010',
-LD = '10011000',
-LDI = '10011001',
-MOD = '10101100',
-MUL = '10101010',
-NOP = '00000000',
-NOT = '01110000',
-OR = '10110001',
-POP = '01001100',
-PRA = '01000010',
-PRN = '01000011',
-PUSH = '01001101',
-RET = '00001001',
-ST = '10011010',
-SUB = '10101001',
-XOR = '10110010';
+ADD = '0b10101000',
+AND = '0b10110011',
+CALL = '0b01001000',
+CMP = '0b10100000',
+DEC = '0b01111001',
+DIV = '0b10101011',
+HLT = '0b00000001',
+INC = '0b01111000',
+INT = '0b01001010',
+IRET = '0b00001011',
+JEQ = '0b01010001',
+JGT = '0b01010100',
+JLT = '0b01010011',
+JMP = '0b01010000',
+JNE = '0b01010010',
+LD = '0b10011000',
+LDI = '0b10011001',
+MOD = '0b10101100',
+MUL = '0b10101010',
+NOP = '0b00000000',
+NOT = '0b01110000',
+OR = '0b10110001',
+POP = '0b01001100',
+PRA = '0b01000010',
+PRN = '0b01000011',
+PUSH = '0b01001101',
+RET = '0b00001001',
+ST = '0b10011010',
+SUB = '0b10101001',
+XOR = '0b10110010';
 
 
 /**
@@ -127,8 +127,11 @@ class CPU {
     // outlined in the LS-8 spec.
 
     // !!! IMPLEMENT ME
-    const instruction = IR.toString(2).binPad();
-    const argNum = parseInt(instruction.slice(0, 2), 2);
+    const aluMask = '0b00100000';
+
+    const instruction = `0b${IR.toString(2).binPad()}`;
+    const argNum = parseInt(instruction, 2) >> 6;
+    const isALU = (instruction && aluMask) >> 5;
     
     switch(instruction) {
       case(HLT):
@@ -141,7 +144,7 @@ class CPU {
         console.log(this.reg[operandA]);
         break;
       default:
-        console.log(instruction, argNum);
+        // console.log(instruction);
     }
 
     // Increment the PC register to go to the next instruction. Instructions
