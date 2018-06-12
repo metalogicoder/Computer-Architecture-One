@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const RAM = require('./ram');
 const CPU = require('./cpu');
 
@@ -49,6 +51,10 @@ let cpu = new CPU(ram);
 
 // TODO: get name of ls8 file to load from command line
 
-loadMemory(cpu);
+const argv = process.argv.slice(2);
+
+
+
+// loadMemory(cpu);
 
 cpu.startClock();
