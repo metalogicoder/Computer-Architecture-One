@@ -58,6 +58,10 @@ if (argv.length != 1) {
   process.exit(1);
 }
 
+const filename = argv[0];
+const filedata = fs.readFileSync(filename, "utf8");
+const lines = filedata.trim().split(/[\r\n]+/g);
+
 
 // loadMemory(cpu);
 
