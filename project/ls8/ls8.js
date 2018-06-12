@@ -53,6 +53,10 @@ let cpu = new CPU(ram);
 
 const argv = process.argv.slice(2);
 
+if (argv.length != 1) {
+  console.error("usage: filename capacity");
+  process.exit(1);
+}
 
 
 // loadMemory(cpu);
