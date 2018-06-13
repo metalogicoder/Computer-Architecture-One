@@ -88,6 +88,9 @@ class CPU {
    */
   alu(op, regA, regB) {
     switch (op) {
+      case 'ADD':
+        this.reg[regA] += this.reg[regB];
+        break;
       case 'MUL':
         // !!! IMPLEMENT ME
         this.reg[regA] *= this.reg[regB];
@@ -128,6 +131,9 @@ class CPU {
     // const instruction = (instBin && '0b00000111');
     
     switch (instBin) {
+      case ADD:
+        this.alu('ADD', operandA, operandB);
+        break;
       case HLT:
         this.stopClock();
         break;
