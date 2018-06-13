@@ -50,6 +50,7 @@ class CPU {
     
     // Special-purpose registers
     this.PC = 0; // Program Counter
+    this.SP = 244; // Stack Pointer
   }
   
   /**
@@ -120,8 +121,8 @@ class CPU {
     // outlined in the LS-8 spec.
 
     // !!! IMPLEMENT ME
-    const instBin = `0b${IR.toString(2).padStart(8, 0)}`; // "0b10011001"
-    const argNum = Number(instBin) >> 6; // 2
+    const instBin = `0b${IR.toString(2).padStart(8, 0)}`;
+    const argNum = Number(instBin) >> 6;
     // const isALU = (instBin && '0b00100000') >> 5;
     // const category = (instBin && '0b00011000') >> 3;
     // const instruction = (instBin && '0b00000111');
@@ -135,6 +136,10 @@ class CPU {
         break;
       case MUL:
         this.alu('MUL', operandA, operandB);
+        break;
+      case PUSH:
+        this.reg[7] = this.reg[operandA];
+        this.ram.write(--this.SP, operandA);
         break;
       case PRN:
         console.log(this.reg[operandA]);
