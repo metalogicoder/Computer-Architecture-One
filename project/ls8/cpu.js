@@ -137,6 +137,10 @@ class CPU {
       case MUL:
         this.alu('MUL', operandA, operandB);
         break;
+      case POP:
+        this.reg[operandA] = this.reg[7];
+        this.SP++;
+        break;
       case PUSH:
         this.reg[7] = this.reg[operandA];
         this.ram.write(--this.SP, operandA);
