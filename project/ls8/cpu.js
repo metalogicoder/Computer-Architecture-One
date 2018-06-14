@@ -35,37 +35,6 @@ const instructions = {
   '0b10101001': 'SUB',
   '0b10110010': 'XOR'
 }
-// ADD = '0b10101000',
-// AND = '0b10110011',
-// CALL = '0b01001000',
-// CMP = '0b10100000',
-// DEC = '0b01111001',
-// DIV = '0b10101011',
-// HLT = '0b00000001',
-// INC = '0b01111000',
-// INT = '0b01001010',
-// IRET = '0b00001011',
-// JEQ = '0b01010001',
-// JGT = '0b01010100',
-// JLT = '0b01010011',
-// JMP = '0b01010000',
-// JNE = '0b01010010',
-// LD = '0b10011000',
-// LDI = '0b10011001',
-// MOD = '0b10101100',
-// MUL = '0b10101010',
-// NOP = '0b00000000',
-// NOT = '0b01110000',
-// OR = '0b10110001',
-// POP = '0b01001100',
-// PRA = '0b01000010',
-// PRN = '0b01000011',
-// PUSH = '0b01001101',
-// RET = '0b00001001',
-// ST = '0b10011010',
-// SUB = '0b10101001',
-// XOR = '0b10110010';
-
 
 /**
  * Class for simulating a simple Computer (CPU & memory)
@@ -161,13 +130,17 @@ class CPU {
     // const isALU = (instBin && '0b00100000') >> 5;
     // const category = (instBin && '0b00011000') >> 3;
     // const instruction = (instBin && '0b00000111');
+
+    this.pcAdvance = true; // Flag for PC advancment
     
     switch (instructions[instBin]) {
       case 'ADD':
         this.alu('ADD', operandA, operandB);
         break;
       case 'CALL':
-        
+        this.poke(--this.SP, this.PC + 2);
+        this.PC = this.reg[operandA];
+        this.pcAdvance = false;
         break;
       case 'HLT':
         this.stopClock();
@@ -178,22 +151,21 @@ class CPU {
       case 'MUL':
         this.alu('MUL', operandA, operandB);
         break;
+      case 'NOP':
+        break;
       case 'POP':
         this.reg[operandA] = this.reg[7];
         this.SP++;
         break;
       case 'PUSH':
         this.reg[7] = this.reg[operandA];
-        this.ram.write(--this.SP, operandA);
+        this.poke(--this.SP, operandA);
         break;
       case 'PRN':
         console.log(this.reg[operandA]);
         break;
-      case 'RET':
-
-        break;
       default:
-        console.log('Unknown instruction', instBin);
+        console.log('Unknown instruction', instBin, this.PC);
     }
 
     // Increment the PC register to go to the next instruction. Instructions
@@ -202,7 +174,7 @@ class CPU {
     // for any particular instruction.
     
     // !!! IMPLEMENT ME
-    this.PC += argNum + 1;
+    if (this.pcAdvance) this.PC += argNum + 1;
   }
 }
 
