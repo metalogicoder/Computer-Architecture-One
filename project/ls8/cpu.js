@@ -164,6 +164,10 @@ class CPU {
       case 'PRN':
         console.log(this.reg[operandA]);
         break;
+      case 'RET':
+        this.PC = this.ram.read(this.SP++);
+        this.pcAdvance = false;
+        break;
       default:
         console.log('Unknown instruction', instBin, this.PC);
     }
