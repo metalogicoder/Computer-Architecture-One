@@ -61,10 +61,13 @@ if (argv.length != 1) {
 const filename = argv[0];
 const filedata = fs.readFileSync(filename, "utf8");
 const lines = filedata.trim().split(/[\r\n]+/g);
+let idx = 0;
 
-lines.forEach((line, idx) => {
+lines.forEach((line, i) => {
   const comment = line.split(' ')[0] === '#';
-  if(!comment) cpu.poke(idx, parseInt(line.split(' ')[0], 2));
+  if (!comment) {
+    cpu.poke(idx++, parseInt(line.split(' ')[0], 2));
+  }
 });
 
 // loadMemory(cpu);
