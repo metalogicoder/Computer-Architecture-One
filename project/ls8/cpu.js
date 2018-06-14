@@ -3,36 +3,68 @@
  */
 
 // Constant variables associated with intruction bytes
-ADD = '0b10101000',
-AND = '0b10110011',
-CALL = '0b01001000',
-CMP = '0b10100000',
-DEC = '0b01111001',
-DIV = '0b10101011',
-HLT = '0b00000001',
-INC = '0b01111000',
-INT = '0b01001010',
-IRET = '0b00001011',
-JEQ = '0b01010001',
-JGT = '0b01010100',
-JLT = '0b01010011',
-JMP = '0b01010000',
-JNE = '0b01010010',
-LD = '0b10011000',
-LDI = '0b10011001',
-MOD = '0b10101100',
-MUL = '0b10101010',
-NOP = '0b00000000',
-NOT = '0b01110000',
-OR = '0b10110001',
-POP = '0b01001100',
-PRA = '0b01000010',
-PRN = '0b01000011',
-PUSH = '0b01001101',
-RET = '0b00001001',
-ST = '0b10011010',
-SUB = '0b10101001',
-XOR = '0b10110010';
+const instructions = {
+  '0b10101000': 'ADD',
+  '0b10110011': 'AND',
+  '0b01001000': 'CALL',
+  '0b10100000': 'CMP',
+  '0b01111001': 'DEC',
+  '0b10101011': 'DIV',
+  '0b00000001': 'HLT',
+  '0b01111000': 'INC',
+  '0b01001010': 'INT',
+  '0b00001011': 'IRET',
+  '0b01010001': 'JEQ',
+  '0b01010100': 'JGT',
+  '0b01010011': 'JLT',
+  '0b01010000': 'JMP',
+  '0b01010010': 'JNE',
+  '0b10011000': 'LD',
+  '0b10011001': 'LDI',
+  '0b10101100': 'MOD',
+  '0b10101010': 'MUL',
+  '0b00000000': 'NOP',
+  '0b01110000': 'NOT',
+  '0b10110001': 'OR',
+  '0b01001100': 'POP',
+  '0b01000010': 'PRA',
+  '0b01000011': 'PRN',
+  '0b01001101':'PUSH',
+  '0b00001001': 'RET',
+  '0b10011010': 'ST',
+  '0b10101001': 'SUB',
+  '0b10110010': 'XOR'
+}
+// ADD = '0b10101000',
+// AND = '0b10110011',
+// CALL = '0b01001000',
+// CMP = '0b10100000',
+// DEC = '0b01111001',
+// DIV = '0b10101011',
+// HLT = '0b00000001',
+// INC = '0b01111000',
+// INT = '0b01001010',
+// IRET = '0b00001011',
+// JEQ = '0b01010001',
+// JGT = '0b01010100',
+// JLT = '0b01010011',
+// JMP = '0b01010000',
+// JNE = '0b01010010',
+// LD = '0b10011000',
+// LDI = '0b10011001',
+// MOD = '0b10101100',
+// MUL = '0b10101010',
+// NOP = '0b00000000',
+// NOT = '0b01110000',
+// OR = '0b10110001',
+// POP = '0b01001100',
+// PRA = '0b01000010',
+// PRN = '0b01000011',
+// PUSH = '0b01001101',
+// RET = '0b00001001',
+// ST = '0b10011010',
+// SUB = '0b10101001',
+// XOR = '0b10110010';
 
 
 /**
@@ -130,32 +162,38 @@ class CPU {
     // const category = (instBin && '0b00011000') >> 3;
     // const instruction = (instBin && '0b00000111');
     
-    switch (instBin) {
-      case ADD:
+    switch (instructions[instBin]) {
+      case 'ADD':
         this.alu('ADD', operandA, operandB);
         break;
-      case HLT:
+      case 'CALL':
+        
+        break;
+      case 'HLT':
         this.stopClock();
         break;
-      case LDI:
+      case 'LDI':
         this.reg[operandA] = operandB;
         break;
-      case MUL:
+      case 'MUL':
         this.alu('MUL', operandA, operandB);
         break;
-      case POP:
+      case 'POP':
         this.reg[operandA] = this.reg[7];
         this.SP++;
         break;
-      case PUSH:
+      case 'PUSH':
         this.reg[7] = this.reg[operandA];
         this.ram.write(--this.SP, operandA);
         break;
-      case PRN:
+      case 'PRN':
         console.log(this.reg[operandA]);
         break;
+      case 'RET':
+
+        break;
       default:
-        // console.log(instBin, argNum);
+        console.log('Unknown instruction', instBin);
     }
 
     // Increment the PC register to go to the next instruction. Instructions
